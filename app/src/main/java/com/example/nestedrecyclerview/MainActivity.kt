@@ -1,6 +1,7 @@
 package com.example.nestedrecyclerview
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,44 +12,50 @@ import com.example.nestedrecyclerview.data.DataGenerator
 
 class MainActivity : AppCompatActivity() {
 
-  private lateinit var adapter: CategoryAdapter
-  private var page = 0
-  private var isLoading = false
+    private lateinit var adapter: CategoryAdapter
+    private var page = 0
+    private var isLoading = false
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    enableEdgeToEdge()
-    setContentView(R.layout.activity_main)
-    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-      val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-      v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-      insets
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_main)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+        val rv = findViewById<RecyclerView>(R.id.rvCategories)
+        adapter = CategoryAdapter {
+            if (!isLoading) {
+                loadMore(false , rv)
+            }
+        }
+
+        rv.layoutManager = LinearLayoutManager(this)
+        rv.adapter = adapter
+        rv.setHasFixedSize(true)
+
+        loadMore(true, rv) // initial load
     }
 
-    adapter = CategoryAdapter {
-      if (!isLoading) {
-        loadMore()
-      }
+    private fun loadMore(firstTime: Boolean, rv: RecyclerView) {
+        isLoading = true
+
+        val newData = DataGenerator.generateCategories(
+            categoryCount = 10,
+            moviesPerCategory = 50
+        )
+
+        if (firstTime) {
+            adapter.submitData(newData)
+        } else {
+            rv.post {
+                adapter.submitData(newData)
+            }
+        }
+        page++
+        isLoading = false
     }
-
-    val rv = findViewById<RecyclerView>(R.id.rvCategories)
-    rv.layoutManager = LinearLayoutManager(this)
-    rv.adapter = adapter
-    rv.setHasFixedSize(true)
-
-    loadMore() // initial load
-  }
-
-  private fun loadMore() {
-    isLoading = true
-
-    val newData = DataGenerator.generateCategories(
-      categoryCount = 10,
-      moviesPerCategory = 50
-    )
-
-    adapter.submitData(newData)
-    page++
-    isLoading = false
-  }
 }

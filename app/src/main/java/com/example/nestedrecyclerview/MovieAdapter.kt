@@ -14,7 +14,7 @@ import com.example.nestedrecyclerview.data.MovieItem
 class MovieAdapter :
   ListAdapter<MovieItem, MovieAdapter.MovieVH>(Diff) {
 
-  companion object {
+    companion object {
     val Diff = object : DiffUtil.ItemCallback<MovieItem>() {
       override fun areItemsTheSame(old: MovieItem, new: MovieItem) =
         old.id == new.id
@@ -24,8 +24,7 @@ class MovieAdapter :
     }
   }
 
-  inner class MovieVH(view:
-                      View) : RecyclerView.ViewHolder(view) {
+  inner class MovieVH(view: View) : RecyclerView.ViewHolder(view) {
     val poster: ImageView = view.findViewById(R.id.ivPoster)
     val title: TextView = view.findViewById(R.id.tvMovieTitle)
   }
