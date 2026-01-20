@@ -1,4 +1,4 @@
-package com.example.nestedrecyclerview
+package com.example.nestedrecyclerview.presentation
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.nestedrecyclerview.R
 import com.example.nestedrecyclerview.data.MovieItem
 
 class MovieAdapter :
@@ -34,7 +35,7 @@ class MovieAdapter :
       .inflate(R.layout.movie_item, parent, false)
     return MovieVH(view)
   }
-
+  //datasource > repo> usecase> vm> update ui
   override fun onBindViewHolder(holder: MovieVH, position: Int) {
     val movie = getItem(position)
 
