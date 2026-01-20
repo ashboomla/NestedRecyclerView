@@ -50,9 +50,10 @@ class MainActivity : AppCompatActivity() {
   private fun setupViewModel() {
 
     val vm = ViewModelProvider(this,factory).get(MovieViewModel::class.java)
+
     val pbar = findViewById<ProgressBar>(R.id.Pbar1)
     lifecycleScope.launch{
-
+      vm.showMovies()
       vm.state.collect{
         when(it){
             is MovieUIState.Error -> pbar.visibility = View.GONE
