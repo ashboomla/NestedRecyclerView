@@ -1,19 +1,7 @@
 package com.example.nestedrecyclerview.data
 
-data class MovieItem(
-  val id: String,
-  val title: String,
-  val posterUrl: String,
-  val rating: Double,
-  val year: Int
-)
-
-data class CategoryRow(
-  val id: String,
-  val title: String,
-  val movies: List<MovieItem>,
-  var scrollPosition: Int = 0
-)
+import com.example.nestedrecyclerview.data.DTO.CategoryRow
+import com.example.nestedrecyclerview.data.DTO.MovieItem
 
 object DataGenerator {
 
