@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class MoviesViewModel : ViewModel() {
   val moviesRepoImpl =  MoviesRepoImpl()
   private var _moviesListState =  MutableStateFlow<UIState>(UIState.Loading)
-  val moviesListState : StateFlow<UIState> = _moviesListState
+  var moviesListState : StateFlow<UIState> = _moviesListState
 
   suspend fun getMoviesList() {
 
