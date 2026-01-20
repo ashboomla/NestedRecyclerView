@@ -1,6 +1,7 @@
 package com.example.nestedrecyclerview.presentation
 
 import android.util.Log
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nestedrecyclerview.data.MoviesRepoImpl
@@ -14,6 +15,12 @@ class MoviesViewModel : ViewModel() {
   val moviesRepoImpl =  MoviesRepoImpl()
   private var _moviesListState =  MutableStateFlow<UIState>(UIState.Loading)
   var moviesListState : StateFlow<UIState> = _moviesListState
+
+    private val rowStates = mutableMapOf<String, LazyListState>()
+
+    fun getRowState(rowId: String): LazyListState {
+        return rowStates.getOrPut(rowId) { LazyListState() }
+    }
 
   suspend fun getMoviesList() {
 
