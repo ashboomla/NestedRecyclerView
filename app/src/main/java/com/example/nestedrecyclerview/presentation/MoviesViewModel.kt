@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nestedrecyclerview.data.MoviesRepoImpl
+import com.example.nestedrecyclerview.data.TestingFlowSImpl
 import com.example.nestedrecyclerview.domain.UIState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,6 +14,7 @@ import kotlinx.coroutines.launch
 
 class MoviesViewModel : ViewModel() {
   val moviesRepoImpl =  MoviesRepoImpl()
+  val testFlowRepo = TestingFlowSImpl(viewModelScope)
   private var _moviesListState =  MutableStateFlow<UIState>(UIState.Loading)
   var moviesListState : StateFlow<UIState> = _moviesListState
 
@@ -21,6 +23,8 @@ class MoviesViewModel : ViewModel() {
     fun getRowState(rowId: String): LazyListState {
         return rowStates.getOrPut(rowId) { LazyListState() }
     }
+
+    val stateFLowTesting = testFlowRepo.testStateFlow()
 
   suspend fun getMoviesList() {
 

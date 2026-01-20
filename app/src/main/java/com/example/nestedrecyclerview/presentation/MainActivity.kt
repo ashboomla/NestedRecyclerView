@@ -16,8 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nestedrecyclerview.R
 import com.example.nestedrecyclerview.data.CategoryRow
+import com.example.nestedrecyclerview.domain.TestingFlows
 import com.example.nestedrecyclerview.domain.UIState
 import com.example.nestedrecyclerview.presentation.compose.MainScreen
+import com.example.nestedrecyclerview.presentation.compose.TestingFlowsScreen
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -30,12 +35,10 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
 //    setContentView(R.layout.activity_main)
-
     viewModel = MoviesViewModel()
 
     setContent{
-
-      MainScreen(viewModel)
+        TestingFlowsScreen(viewModel = viewModel)
     }
 
 
